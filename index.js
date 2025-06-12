@@ -28,6 +28,16 @@ const client = new MongoClient(process.env.MONGODB_URI, {
 
 async function run() {
   try {
+    const database = client.db("edu-care-DB");
+    const serviceCollection = database.collection("services");
+
+    // Service API's - POST endpoint
+    app.post("/add-service", async (req, res) => {
+      const service = req.body;
+      const result = await serviceCollection.insertOne(service);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Successfully connected to MongoDB!");
