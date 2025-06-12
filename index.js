@@ -31,11 +31,20 @@ async function run() {
     const database = client.db("edu-care-DB");
     const serviceCollection = database.collection("services");
 
-    // Service API's - POST endpoint
+    // Service API's
+
+    // POST endpoint
     app.post("/add-service", async (req, res) => {
       const service = req.body;
+      service.price = parseInt(service.price);
       const result = await serviceCollection.insertOne(service);
       res.send(result);
+    });
+
+    // GET endpoint
+    app.get("/all-services", async (req, res) => {
+      const allServices = await serviceCollection.find().toArray();
+      res.send(allServices);
     });
 
     // Send a ping to confirm a successful connection
