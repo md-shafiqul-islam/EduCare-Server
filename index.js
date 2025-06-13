@@ -2,7 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 // App initialization
 const app = express();
@@ -45,6 +45,14 @@ async function run() {
     app.get("/all-services", async (req, res) => {
       const allServices = await serviceCollection.find().toArray();
       res.send(allServices);
+    });
+
+    // GET endpoint - Specific Service
+    app.get("/service/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const serviceById = await serviceCollection.findOne(filter);
+      res.send(serviceById);
     });
 
     // Send a ping to confirm a successful connection
