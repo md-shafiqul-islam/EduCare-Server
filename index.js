@@ -65,6 +65,14 @@ async function run() {
       res.send(result);
     });
 
+    // GET endpoint - Specific Email
+    app.get("/booked-services/:email", async (req, res) => {
+      const email = req.params.email;
+      const filter = { currentUserEmail: email };
+      const result = await bookingCollection.find(filter).toArray();
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Successfully connected to MongoDB!");
