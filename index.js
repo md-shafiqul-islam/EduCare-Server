@@ -30,6 +30,7 @@ async function run() {
   try {
     const database = client.db("edu-care-DB");
     const serviceCollection = database.collection("services");
+    const bookingCollection = database.collection("booking");
 
     // Service API's
 
@@ -53,6 +54,15 @@ async function run() {
       const filter = { _id: new ObjectId(id) };
       const serviceById = await serviceCollection.findOne(filter);
       res.send(serviceById);
+    });
+
+    // Booking API's
+
+    // POST endpoint
+    app.post("/booking-service", async (req, res) => {
+      const bookingService = req.body;
+      const result = await bookingCollection.insertOne(bookingService);
+      res.send(result);
     });
 
     // Send a ping to confirm a successful connection
