@@ -82,6 +82,14 @@ async function run() {
       res.send(result);
     });
 
+    // DELETE endpoint - Delete Specific Service
+    app.delete("/delete-service/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const result = await serviceCollection.deleteOne(filter);
+      res.send(result);
+    });
+
     // Booking API's
 
     // POST endpoint
