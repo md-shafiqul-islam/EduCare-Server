@@ -56,6 +56,14 @@ async function run() {
       res.send(serviceById);
     });
 
+    // GET endpoint - Specific Email All Services
+    app.get("/my-added-services", async (req, res) => {
+      const email = req.query.email;
+      const query = email ? { serviceProviderEmail: email } : {};
+      const result = await serviceCollection.find(query).toArray();
+      res.send(result);
+    });
+
     // Booking API's
 
     // POST endpoint
