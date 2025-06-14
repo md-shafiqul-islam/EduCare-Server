@@ -64,6 +64,24 @@ async function run() {
       res.send(result);
     });
 
+    // PUT endpoint - Update Specific Service
+    app.put("/update-service/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+
+      const updatedService = req.body;
+      const updateDoc = { $set: updatedService };
+
+      const options = { upsert: true };
+
+      const result = await serviceCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+
     // Booking API's
 
     // POST endpoint
