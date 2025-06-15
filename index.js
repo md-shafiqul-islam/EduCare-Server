@@ -107,6 +107,30 @@ async function run() {
       res.send(result);
     });
 
+    // GET endpoint - Services Booked From My Email
+    app.get("/bookings/:email", async (req, res) => {
+      const email = req.params.email;
+      const filter = { providerEmail: email };
+      const bookedServices = await bookingCollection.find(filter).toArray();
+      res.send(bookedServices);
+    });
+
+    // PATCH endpoint - Service Status Update
+    app.patch("/service-to-do/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+
+      const updatedStatus = req.body;
+      const updateDoc = {
+        $set: {
+          serviceStatus: updatedStatus.serviceStatus,
+        },
+      };
+
+      const result = await bookingCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Successfully connected to MongoDB!");
