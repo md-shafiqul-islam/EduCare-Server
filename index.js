@@ -44,7 +44,14 @@ async function run() {
 
     // GET endpoint
     app.get("/all-services", async (req, res) => {
-      const allServices = await serviceCollection.find().toArray();
+      const searchParams = req.query.searchParams;
+
+      let query = {};
+      if (searchParams) {
+        query = { name: { $regex: searchParams, $options: "i" } };
+      }
+
+      const allServices = await serviceCollection.find(query).toArray();
       res.send(allServices);
     });
 
