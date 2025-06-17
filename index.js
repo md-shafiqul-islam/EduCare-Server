@@ -2,6 +2,16 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+
+const admin = require("firebase-admin");
+const decoded = Buffer.from(process.env.FB_SERVICE_KEY, "base64").toString(
+  "utf8"
+);
+const serviceAccount = JSON.parse(decoded);
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 // App initialization
@@ -26,6 +36,24 @@ const client = new MongoClient(process.env.MONGODB_URI, {
   },
 });
 
+const verifyJWT = async (req, res, next) => {
+  const authHeader = req?.headers?.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).send({ message: "unauthorized access" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = await admin.auth().verifyIdToken(token);
+    req.decoded = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).send({ message: "unauthorized access" });
+  }
+};
+
 async function run() {
   try {
     const database = client.db("edu-care-DB");
@@ -35,7 +63,7 @@ async function run() {
     // Service API's
 
     // POST endpoint
-    app.post("/add-service", async (req, res) => {
+    app.post("/add-service", verifyJWT, async (req, res) => {
       const service = req.body;
       service.price = parseInt(service.price);
       const result = await serviceCollection.insertOne(service);
@@ -64,7 +92,7 @@ async function run() {
     });
 
     // GET endpoint - Specific Email All Services
-    app.get("/my-added-services", async (req, res) => {
+    app.get("/my-added-services", verifyJWT, async (req, res) => {
       const email = req.query.email;
       const query = email ? { serviceProviderEmail: email } : {};
       const result = await serviceCollection.find(query).toArray();
@@ -72,7 +100,7 @@ async function run() {
     });
 
     // PUT endpoint - Update Specific Service
-    app.put("/update-service/:id", async (req, res) => {
+    app.put("/update-service/:id", verifyJWT, async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
 
@@ -90,7 +118,7 @@ async function run() {
     });
 
     // DELETE endpoint - Delete Specific Service
-    app.delete("/delete-service/:id", async (req, res) => {
+    app.delete("/delete-service/:id", verifyJWT, async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const result = await serviceCollection.deleteOne(filter);
@@ -100,14 +128,14 @@ async function run() {
     // Booking API's
 
     // POST endpoint
-    app.post("/booking-service", async (req, res) => {
+    app.post("/booking-service", verifyJWT, async (req, res) => {
       const bookingService = req.body;
       const result = await bookingCollection.insertOne(bookingService);
       res.send(result);
     });
 
     // GET endpoint - Specific Email
-    app.get("/booked-services/:email", async (req, res) => {
+    app.get("/booked-services/:email", verifyJWT, async (req, res) => {
       const email = req.params.email;
       const filter = { currentUserEmail: email };
       const result = await bookingCollection.find(filter).toArray();
@@ -115,7 +143,7 @@ async function run() {
     });
 
     // GET endpoint - Services Booked From My Email
-    app.get("/bookings/:email", async (req, res) => {
+    app.get("/bookings/:email", verifyJWT, async (req, res) => {
       const email = req.params.email;
       const filter = { providerEmail: email };
       const bookedServices = await bookingCollection.find(filter).toArray();
@@ -123,7 +151,7 @@ async function run() {
     });
 
     // PATCH endpoint - Service Status Update
-    app.patch("/service-to-do/:id", async (req, res) => {
+    app.patch("/service-to-do/:id", verifyJWT, async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
 
