@@ -1,89 +1,203 @@
-# 🛠️ EduCare – Server Side
+# EduCare — Server
 
-Backend for **EduCare**, a role-based service sharing platform for educational resources.  
-Handles authentication, user roles, service creation, booking management, and secure API endpoints.
+Backend API for **EduCare**, an educational service-sharing platform where users can create, explore, and book educational services.
 
----
-
-## 📌 About
-
-Built with **Express.js**, **MongoDB**, and **Firebase Admin SDK**, this server provides RESTful APIs for user registration, login, service publishing, booking, and review management.
+This repository contains the server-side application responsible for authentication, authorization, service management, booking workflows, reviews, and secure API operations.
 
 ---
 
-## ⚙️ Setup & Run Locally
+## 🚀 Project Overview
 
-1. Clone the repository
+EduCare connects users with educational service providers through a centralized service-sharing platform.
 
-   ```bash
-   git clone https://github.com/md-shafiqul-islam/educare-server.git
-   cd educare-server
+The backend supports workflows for:
 
----
+- User authentication
+- Role-based access
+- Educational service management
+- Service booking
+- Booking management
+- Review management
+- Secure API operations
 
-## 🛠 Tech Stack
-
-- Node.js  
-- Express.js  
-- MongoDB
-- Firebase Admin SDK
-- JWT
-- CORS & dotenv
+This server powers the EduCare client application by providing RESTful APIs and handling database operations.
 
 ---
 
-## 🌐 Project Structure 
+## ✨ Key Features
 
-📦 educare-server
-┣ 📂 controllers
-┣ 📂 middlewares
-┣ 📂 models
-┣ 📂 routes
-┣ 📜 server.js
-┣ 📜 .env.example
-┗ 📜 package.json
+### 🔐 Authentication & Authorization
+
+- Firebase token verification
+- JWT-based authentication
+- Protected API endpoints
+- Secure middleware-based authorization
 
 ---
 
-## 📁 Repositories  
-**Server:** [github.com/md-shafiqul-islam/craftflow-server](github.com/md-shafiqul-islam/educare-server)
+### 🛡️ Role-Based Access Control
+
+The application supports role-based access for:
+
+- Users
+- Service Providers
+
+Authorization middleware helps ensure users can only perform actions permitted for their role.
 
 ---
 
-## 🧪 Getting Started
+### 📚 Service Management
 
-To run this project locally:
+- Create educational service listings
+- Retrieve available services
+- Update service information
+- Delete services
+- Manage service-related data
 
-# 1. Clone the repositories
-git clone https://github.com/md-shafiqul-islam/EduCare-Server
+---
 
-# 2. Install dependencies for both
-cd ../server
+### 📅 Booking Management
+
+- Create service bookings
+- Retrieve booking information
+- Manage booking requests
+- Track booking-related workflows
+- Support booking status updates
+
+---
+
+### ⭐ Review Management
+
+- Create reviews for services
+- Retrieve service reviews
+- Manage review-related data
+
+---
+
+### 🌐 RESTful API
+
+- Structured API routes
+- CRUD operations
+- Protected endpoints
+- Middleware-based request handling
+- Database operations with MongoDB
+
+---
+
+## 🛠️ Tech Stack
+
+- **Node.js**
+- **Express.js**
+- **MongoDB**
+- **Firebase Admin SDK**
+- **JWT**
+- **CORS**
+- **dotenv**
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/md-shafiqul-islam/EduCare-Server.git
+```
+
+### 2. Navigate to the Project
+
+```bash
+cd EduCare-Server
+```
+
+### 3. Install Dependencies
+
+```bash
 npm install
+```
 
-# 3. Set up environment variables
-# For server: create `.env` inside `craftflow-server`
+### 4. Configure Environment Variables
+
+```env
 PORT=3000
-DB_URL=MONGODB_URI
-ACCESS_TOKEN_SECRET=FB_SERVICE_KEY
+DB_URL=your_mongodb_connection_string
+ACCESS_TOKEN_SECRET=your_jwt_secret
+FB_SERVICE_KEY=your_firebase_service_account_credentials
+```
 
-# 4. Run server
-# In terminal:
-cd server
+### 5. Run the Server
+
+```bash
 nodemon index.js
+```
 
 ---
 
-## 🔧 Key Features
+## 🔗 Related Repository
 
-- Firebase JWT-based authentication
-- CRUD operations for services
-- Booking and review management
-- Secure API with validation and middleware
+- Backend: [CraftFlow Server](https://github.com/md-shafiqul-islam/EduCare-Client)
 
 ---
 
-## 📄 License  
-This project is open-source and available under the [MIT License](LICENSE).
+## 🌐 Live Project
+
+👉 [Live](https://edu-care978.netlify.app/)
 
 ---
+
+### 🔌 API Capabilities
+
+The backend provides APIs for:
+
+- Authentication-related operations
+- User management
+- Role-based authorization
+- Educational service management
+- Service creation and updates
+- Service booking
+- Booking management
+- Review management
+
+---
+
+### 🔒 Security
+
+The server implements security-focused practices including:
+
+- Firebase token verification
+- JWT-based authentication
+- Protected API routes
+- Role-based authorization
+- Middleware-based request validation
+- Environment variable protection
+- CORS configuration
+
+---
+
+### 📌 About EduCare
+
+EduCare is a full-stack educational service-sharing platform that allows users to explore, provide, and book educational services.
+
+The application focuses on:
+
+- Educational service discovery
+- Service publishing
+- Booking workflows
+- Role-based access
+- Secure authentication
+- Responsive user experience
+
+---
+
+### 👨‍💻 Author
+
+Md. Shafiqul Islam
+
+Software Engineer | Full-Stack Developer
+
+- [Porfolio](https://shafiqul-islam.netlify.app/)
+- [LinkedIn](https://www.linkedin.com/in/mdshafiqulislam1/)
+- [GitHub](https://github.com/md-shafiqul-islam)
+
+---
+
