@@ -135,7 +135,7 @@ nodemon index.js
 
 ## 🔗 Related Repository
 
-- Backend: [CraftFlow Server](https://github.com/md-shafiqul-islam/EduCare-Client)
+- Frontend: [EduCare Client](https://github.com/md-shafiqul-islam/EduCare-Client)
 
 ---
 
